@@ -45,27 +45,27 @@ namespace MyFirstProjectAutomationC_.UiTest
            //לוודא שנכנסתי 
             
         }
-       //לא עובד...
-        [Test]
-        public async Task LoginWithoutPassword()
+       // עובד...
+       [Test]
+        public async Task LoginWithWrongPassword()
         {
-            // Navigate to the login page
-            driver.Navigate().GoToUrl(baseUrl);
-            //loginButton
-            IWebElement loginButton = driver.FindElement(By.LinkText("Log in"));
-            loginButton.Click();
-            //email
-            IWebElement EmailButton = driver.FindElement(By.Id("user_email"));
-            EmailButton.SendKeys("Admin@gmail.com");
-            //Signing in
-            IWebElement SigningIn = driver.FindElement(By.XPath("//*[@id=\"login_form\"]/div/div[2]/button"));
-            SigningIn.Click();
-            //verify 
-            IWebElement errorMessage = driver.FindElement(By.XPath("//*[@id=\"login_form\"]/div/div[1]"));
-            bool isErrorMessageDisplayed = errorMessage.Displayed;
-            if (isErrorMessageDisplayed == false)
-                return;
-        }
+        //Navigate to the login page
+        driver.Navigate().GoToUrl(baseUrl);
+        IWebElement loginButton = driver.FindElement(By.LinkText("Log in"));
+        //loginButton
+        loginButton.Click();
+        //email
+        IWebElement EmailButton = driver.FindElement(By.Id("user_email"));
+        EmailButton.SendKeys("Admin@gmail.com");
+        //password
+        IWebElement user_password = driver.FindElement(By.Id("user_password"));
+        // user_password.SendKeys("Asdasd1!");
+        //Signing in
+        IWebElement SigningIn = driver.FindElement(By.XPath("//*[@id=\"login_form\"]/div/div[2]/button"));
+        SigningIn.Click();
+        //Make sure the password field is empty
+        Assert.IsTrue(string.IsNullOrEmpty(user_password.GetAttribute("value")), "field isnt empty");
+}
        //עובד, אני צריכה לוודא שהתחברתי,
         [Test]
         public async Task SignUp()
